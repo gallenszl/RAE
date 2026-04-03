@@ -2,11 +2,12 @@ stage_1:
   target: stage1.RAE
   params:
     encoder_cls: 'SigLIP2wNorm'
-    encoder_config_path: 'google/siglip2-base-patch16-256'
-    encoder_input_size: 256
-    encoder_params: {'model_name': 'google/siglip2-base-patch16-256'}
-    decoder_config_path: 'configs/decoder/ViTXL'
-    pretrained_decoder_path: 'models/decoders/siglip2/base_p16_i256/ViTXL_n08/model.pt'
+    encoder_config_path: 'google/siglip2-so400m-patch14-224'
+    encoder_input_size: 224
+    encoder_params: {'model_name': 'google/siglip2-so400m-patch14-224'}
+    decoder_config_path: '/root/paddlejob/workspace/shenzhelun/nyu-visionx/siglip2_decoder/config.json'
+    decoder_patch_size: 14  # 匹配 siglip2_decoder 的 patch_size=14，输出维度 14*14*3=588
+    pretrained_decoder_path: '/root/paddlejob/workspace/shenzhelun/nyu-visionx/siglip2_decoder/model.pt'
     noise_tau: 0.
     reshape_to_2d: True
-    normalization_stat_path: 'models/stats/siglip2/base_p16_i256/ImageNet1k/stat.pt'
+    # normalization_stat_path: 'models/stats/siglip2/base_p16_i256/ImageNet1k/stat.pt'  # 跳过 normalization，与 Scale-RAE 保持一致

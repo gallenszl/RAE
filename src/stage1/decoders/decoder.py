@@ -542,6 +542,7 @@ class ViTMAELayer(nn.Module):
 class GeneralDecoder(nn.Module):
     def __init__(self, config, num_patches):
         super().__init__()
+        # import pdb; pdb.set_trace()
         self.decoder_embed = nn.Linear(config.hidden_size, config.decoder_hidden_size, bias=True)
         self.decoder_pos_embed = nn.Parameter(
             torch.zeros(1, num_patches + 1, config.decoder_hidden_size), requires_grad=False
@@ -688,7 +689,8 @@ class GeneralDecoder(nn.Module):
         drop_cls_token: bool = False,
     ):
         # embed tokens
-        x = self.decoder_embed(hidden_states)
+        # import pdb; pdb.set_trace()
+        x = self.decoder_embed(hidden_states) #hidden_states [1, 1024, 1152]
         #print(f"x.shape = {x.shape}")
         if drop_cls_token:
             x_ = x[:, 1:, :]  # no cls token
@@ -730,10 +732,11 @@ class GeneralDecoder(nn.Module):
         if output_hidden_states:
             all_hidden_states = all_hidden_states + (hidden_states,)
 
-        hidden_states = self.decoder_norm(hidden_states)
+        # import pdb; pdb.set_trace()
+        hidden_states = self.decoder_norm(hidden_states)  ## this is a LN
 
         # predictor projection
-        logits = self.decoder_pred(hidden_states)
+        logits = self.decoder_pred(hidden_states) ## recover to padding_size ** 2 * channels
 
         # remove cls token
         logits = logits[:, 1:, :]

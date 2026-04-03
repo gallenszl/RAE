@@ -396,7 +396,7 @@ def main():
                     z = model_woddp.encode(images)
                 recon = model_woddp.decode(z)
                 recon_normed = recon * 2.0 - 1.0
-                rec_loss = F.l1_loss(recon, images)
+                rec_loss = F.l1_loss(recon, images) ## L1 loss
                 if use_lpips:
                     lpips_loss = lpips(real_normed, recon_normed)
                 else:

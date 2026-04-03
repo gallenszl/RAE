@@ -103,9 +103,10 @@ class RAE(nn.Module):
             b, c, h, w = z.shape
             n = h * w
             z = z.view(b, c, n).transpose(1, 2)
+        # import pdb; pdb.set_trace()  #### shape is [1,768,32,32] to [1,1024,768] 1024 denotes the token size
         output = self.decoder(z, drop_cls_token=False).logits
-        x_rec = self.decoder.unpatchify(output)
-        x_rec = x_rec * self.encoder_std.to(x_rec.device) + self.encoder_mean.to(x_rec.device)
+        x_rec = self.decoder.unpatchify(output) # unpatchify the output
+        x_rec = x_rec * self.encoder_std.to(x_rec.device) + self.encoder_mean.to(x_rec.device) # denormalize the output
         return x_rec
     
     def forward(self, x: torch.Tensor) -> torch.Tensor:

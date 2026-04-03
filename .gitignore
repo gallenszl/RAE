@@ -12,6 +12,5 @@ __pycache__/
 .cache/
 /checkpoints/
 upload_to_hf.py
-/*.png
 /####/
 /models_nocontent/
